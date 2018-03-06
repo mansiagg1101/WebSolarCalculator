@@ -3,7 +3,7 @@
 <head>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
- <title>Geocoding service</title>
+ <title>Solar Calculator</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -18,8 +18,8 @@
       }
       #floating-panel {
         position: absolute;
-        top: 10px;
-        left: 25%;
+        top: 150px;
+        left: 40%;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
@@ -32,30 +32,40 @@
     </style>
 </head>
 <body>
-    <h1>Solar Calculator</h1>
-
+    <h1 align="center">Solar Calculator</h1>
     <div id="floating-panel">
     
       <input id="address" type="textbox" value="Massachusetts, USA">
       <input id="submit" type="button" value="Geocode">
     </div>
-    <div id="map"></div>
+     
+    		
+   <div id="map"></div>
+      <input id="calculate" type="button" value="Nominal Power">
+    		<p id="area"></p>
+    		<p id="number"></p>
+    		        <input id="delete" type="button" value="Remove Polygon">
+ 
 
    
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  
  		<script async defer
     		src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB5zNkfLlAjRze4T__kiH7YC_Z3Vevs_f4A&callback=initMap">
     		</script>
+    		
    <!-- AIzaSyB5zNkfLlAjRze4T__kiH7YC_Z3Vevs_f4-->
  		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5zNkfLlAjRze4T__kiH7YC_Z3Vevs_f4&libraries=drawing&callback=initMap"
          async defer></script>
          <script src="DrawPolygon.js"></script>
          <script src="FindGeoCodeAddress.js"></script>
+         <script src="CalculateCircleArea.js"></script>
          
         <script>
 	      function initMap() {
 	        var map = new google.maps.Map(document.getElementById('map'), {
-	          zoom: 8,
+	          zoom: 33,
 	          center: {lat: 42.407211, lng: -71.382439}
 	        });
 	        drawingTools(map);
@@ -66,6 +76,10 @@
 	        document.getElementById('submit').addEventListener('click', function() {
 	          geocodeAddress(geocoder, map);
 	        });
+	        document.getElementById('delete').addEventListener('click', function() {
+	        	removePolygon(map);
+		        });
+	       
 	      
 	      }
 
