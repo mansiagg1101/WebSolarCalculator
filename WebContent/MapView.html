@@ -7,14 +7,20 @@
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-      #map {
-        height: 100%;
-      }
+      #map_canvas {
+  height: 90%;
+  width: 80%;
+  left: 10%;
+  right: 10%;
+  margin: 20px;
+  padding: 10px
+}
       /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
+        background-color:#EEF5F7;
       }
       #floating-panel {
         position: absolute;
@@ -29,61 +35,54 @@
         line-height: 30px;
         padding-left: 10px;
       }
+       #floating-panel-cal {
+        position: absolute;
+        bottom: 20px;
+        right: 20%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 50px;
+        padding-left: 10px;
+      }
     </style>
 </head>
 <body>
     <h1 align="center">Solar Calculator</h1>
     <div id="floating-panel">
     
-      <input id="address" type="textbox" value="Massachusetts, USA">
-      <input id="submit" type="button" value="Geocode">
+	    <input id="address" type="text" value=",USA">
+	    <input id="submit" type="button" value="Locate"/>  
+	   	<input type="button" id="enablePolygon" value="Draw" />
+		<input type="button" id="resetPolygon" value="Reset" style="display: none;" />
+	      
     </div>
+    
+<div id="map_canvas"></div>
      
-    		
-   <div id="map"></div>
-      <input id="calculate" type="button" value="Nominal Power">
+ <div id="floating-panel-cal">   		
     		<p id="area"></p>
     		<p id="number"></p>
-    		        <input id="delete" type="button" value="Remove Polygon">
- 
-
+    		<p id="totalEnergy"></p> 
+    		</div>
    
   </body>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   
  		<script async defer
-    		src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB5zNkfLlAjRze4T__kiH7YC_Z3Vevs_f4A&callback=initMap">
+    		src="http://maps.googleapis.com/maps/api/js?key=YOUR_KEYA&callback=initMap">
     		</script>
     		
    <!-- AIzaSyB5zNkfLlAjRze4T__kiH7YC_Z3Vevs_f4-->
- 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5zNkfLlAjRze4T__kiH7YC_Z3Vevs_f4&libraries=drawing&callback=initMap"
+ 		<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&libraries=drawing&callback=initMap"
          async defer></script>
-         <script src="DrawPolygon.js"></script>
-         <script src="FindGeoCodeAddress.js"></script>
-         <script src="CalculateCircleArea.js"></script>
-         
-        <script>
-	      function initMap() {
-	        var map = new google.maps.Map(document.getElementById('map'), {
-	          zoom: 33,
-	          center: {lat: 42.407211, lng: -71.382439}
-	        });
-	        drawingTools(map);
-	         
-	        var geocoder = new google.maps.Geocoder();
-	        
-	
-	        document.getElementById('submit').addEventListener('click', function() {
-	          geocodeAddress(geocoder, map);
-	        });
-	        document.getElementById('delete').addEventListener('click', function() {
-	        	removePolygon(map);
-		        });
-	       
-	      
-	      }
-
+         <script src="CreateMap.js"></script>
+         <script src="PolygonManager.js"></script>
+         <script src="GeoCodeManager.js"></script>
+         <script src="CalculateNominalPower.js"></script>
       
-    </script>
 </html>
 
